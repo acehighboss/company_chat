@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>웹 채팅 데모 (실시간)</title>
+  <link rel="stylesheet" href="/public/styles.css" />
+</head>
+<body>
+  <!-- 1번: 로그인/회원가입 + 모니터링 진입 -->
+  <section id="slide1" class="view active">
+    <div class="card narrow">
+      <h1>WEB MESSAGE</h1>
+      <div class="field">
+        <label for="loginId">ID</label>
+        <input id="loginId" type="text" placeholder="아이디" autocomplete="username" />
+      </div>
+      <div class="field">
+        <label for="loginPw">PW</label>
+        <input id="loginPw" type="password" placeholder="비밀번호" autocomplete="current-password" />
+      </div>
+      <div class="row">
+        <button id="btnLogin" class="primary">Login</button>
+        <button id="btnJoin" class="ghost">Join</button>
+      </div>
+      <hr />
+      <button id="btnMonitoring" class="secondary">Monitoring</button>
+      <p class="hint">* 모니터링 클릭 시 2번 슬라이드(어드민 전용 로그인)으로 이동</p>
+    </div>
+  </section>
+
+  <!-- 2번: 어드민 전용 로그인 -->
+  <section id="slide2" class="view">
+    <div class="card narrow">
+      <h1>ADMIN MONITORING</h1>
+      <div class="field">
+        <label for="adminId">ID</label>
+        <input id="adminId" type="text" placeholder="admin" />
+      </div>
+      <div class="field">
+        <label for="adminPw">PW</label>
+        <input id="adminPw" type="password" placeholder="admin" />
+      </div>
+      <button id="btnAdminLogin" class="primary">Login</button>
+      <p class="hint">관리자 계정만 가능 (ID: <b>admin</b> / PW: <b>admin</b>)</p>
+      <button class="link" data-goto="slide1">← 뒤로</button>
+    </div>
+  </section>
+
+  <!-- 2-1: 모니터링 화면 -->
+  <section id="monitoring" class="view">
+    <div class="layout">
+      <header class="topbar">
+        <div class="left">
+          <strong>Monitoring</strong>
+          <span id="monStatus" class="tag">접속 중</span>
+        </div>
+        <div class="right">
+          <button class="danger" id="btnAdminLogout">Logout</button>
+        </div>
+      </header>
+      <main class="grid two">
+        <div class="card">
+          <h2>방 목록</h2>
+          <ul id="monRoomList" class="list"></ul>
+        </div>
+        <div class="card">
+          <h2>유저 목록(온라인)</h2>
+          <ul id="monUserList" class="list"></ul>
+        </div>
+        <div class="card">
+          <h2>삭제된 방 (아카이브)</h2>
+          <ul id="monDeletedList" class="list"></ul>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- 3번: 유저 홈 -->
+  <section id="slide3" class="view">
+    <div class="layout">
+      <header class="topbar">
+        <div class="left">
+          <span>USER NAME:</span>
+          <strong id="currentUser">-</strong>
+        </div>
+        <div class="right">
+          <button class="ghost" id="btnGoMonitoring">Monitoring</button>
+          <button class="danger" id="btnLogout">Logout</button>
+        </div>
+      </header>
+      <main class="grid two">
+        <div class="card">
+          <h2>방 만들기</h2>
+          <div class="field">
+            <label for="roomName">ROOM name</label>
+            <input id="roomName" type="text" placeholder="방 이름" />
+          </div>
+          <div class="field">
+            <label for="roomPw">ROOM pw</label>
+            <input id="roomPw" type="password" placeholder="방 비밀번호(선택)" />
+          </div>
+          <button id="btnCreateRoom" class="primary">CREATE</button>
+        </div>
+
+        <div class="card">
+          <h2>방 목록</h2>
+          <ul id="roomList" class="list empty">
+            <li class="muted">아직 만들어진 방이 없습니다.</li>
+          </ul>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- 4번: 채팅 -->
+  <section id="slide4" class="view">
+    <div class="layout">
+      <header class="topbar">
+        <div class="left">
+          <span>방이름:</span>
+          <strong id="chatRoomName">-</strong>
+          <span id="memberCount" class="tag"></span>
+        </div>
+        <div class="right">
+          <button class="ghost" id="btnLeaveRoom">나가기</button>
+        </div>
+      </header>
+
+      <main class="chatWrap">
+        <ul id="chatList" class="chatList"></ul>
+      </main>
+
+      <footer class="composer">
+        <input id="chatInput" type="text" placeholder="채팅입력" />
+        <input id="fileInput" type="file" title="파일 업로드" />
+        <button id="btnSend" class="primary">보내기</button>
+      </footer>
+    </div>
+  </section>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/public/app.js"></script>
+</body>
+</html>
