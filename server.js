@@ -12,10 +12,10 @@ const mariadb = require('mariadb');
 
 // MariaDB 연결 풀 생성
 const pool = mariadb.createPool({
-  host: '192.168.44.151', // VM1의 MariaDB 서버 IP 주소
-  user: 'your_db_user', // MariaDB 사용자 이름
-  password: 'your_db_password', // MariaDB 비밀번호
-  database: 'your_db_name', // 사용할 데이터베이스 이름
+  host: '192.168.44.133', // VM1의 MariaDB 서버 IP 주소
+  user: 'user1', // MariaDB 사용자 이름
+  password: '1234', // MariaDB 비밀번호
+  database: 'company_chat', // 사용할 데이터베이스 이름
   connectionLimit: 5
 });
 
