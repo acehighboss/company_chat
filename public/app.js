@@ -192,6 +192,24 @@ function connectSocket(){
 
 function requestMonitoring(){
   socket.emit("admin:getState");
+
+  // 로그 불러오는 API 호출 코드 추가
+  fetch("/api/admin/logs")
+    .then(response => response.json())
+    .then(logs => {
+      const logList = document.getElementById('logList');
+      logList.innerHTML = ''; // 기존 로그 지우기
+      logs.forEach(log => {
+        const li = document.createElement('li');
+        li.textContent = `[${log.timestamp}] [${log.level.toUpperCase()}] ${log.message}`;
+        logList.appendChild(li);
+      });
+    })
+    .catch(error => {
+      console.error('로그를 불러오는 데 실패했습니다:', error);
+      const logList = document.getElementById('logList');
+      logList.innerHTML = '<li>로그를 불러오지 못했습니다.</li>';
+    });
 }
 
 async function renderDeletedRooms(){
